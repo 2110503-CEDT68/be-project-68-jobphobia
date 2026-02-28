@@ -19,7 +19,7 @@ const hpp = require('hpp');
 const cors = require('cors');
 
 //route file
-// const hospitals = require('./routes/hospitals');
+const shop = require('./routes/shop');
 // const appointment = require('./routes/appointments');
 const auth = require('./routes/auth');
 
@@ -58,7 +58,7 @@ app.use(hpp());
 
 
 //mount router
-// app.use('/api/v1/hospitals', hospitals);
+app.use('/api/v1/shop', shop);
 app.use('/api/v1/auth', auth);
 // app.use('/api/v1/appointments', appointment);
 
