@@ -1,4 +1,4 @@
-@startuml
+@startuml name
 top to bottom direction
 
 package "Massage Reservation Authentication" {
