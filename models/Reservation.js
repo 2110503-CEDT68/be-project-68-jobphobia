@@ -7,7 +7,7 @@ const ReservationSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User',
+        ref: 'MS_Users',
         required: true
     },
     shop: {

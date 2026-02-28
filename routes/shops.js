@@ -9,7 +9,7 @@ const router = express.Router();
 const {protect, authorize} = require('../middleware/auth');
 
 // Re-route into other resource router
-router.use('/:hospitalId/appointments/', reservationRouter);
+router.use('/:shopId/reservations/', reservationRouter);
 router.route('/').get(getShops).post(protect, authorize('admin'), createShop);
 router.route('/:id').get(getShop).put(protect, authorize('admin'), updateShop).delete(protect, authorize('admin'), deleteShop);
 

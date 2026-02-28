@@ -6,18 +6,24 @@ exports.getReservations = async (req, res, next) => {
     // General user can see only their reservation
     if(req.user.role !== 'admin'){
         query = Reservation.find({user:req.user.id}).populate({
-            path: 'hospital',
+            path: 'shop',
             select: 'name province tel'
-        });
+        })
     // Can see everyone on admin
     }else{ 
-        if(req.params.hospitalId) {
-            console.log(req.params.hospitalId);
-            query = Reservation.find({hospital: req.params.hospitalId});
+        if(req.params.shopId) {
+            console.log(req.params.shopId);
+            query = Reservation.find({shop: req.params.shopId}).populate({
+                path: 'user',
+                select: 'name tel email'
+            });;
         }else{
             query = Reservation.find().populate({
-                path: 'hospital',
+                path: 'shop',
                 select: 'name province tel'
+            }).populate({
+                path: 'user',
+                select: 'name tel email'
             });
         }
     }
@@ -42,9 +48,12 @@ exports.getReservations = async (req, res, next) => {
 exports.getReservation = async (req, res, next) => {
     try{
         const reservation = await Reservation.findById(req.params.id).populate({
-            path: 'hospital',
+            path: 'shop',
             select: 'name description tel'
-        })
+        }).populate({
+            path: 'user',
+            select: 'name email'
+        });
 
         if(!reservation){
             return res.status(400).json({
@@ -68,14 +77,14 @@ exports.getReservation = async (req, res, next) => {
 
 exports.addReservation = async (req, res, next) => {
     try{
-        req.body.hospital = req.params.hospitalId;
+        req.body.shop = req.params.shopId;
 
-        const hospital = await Hospital.findById(req.params.hospitalId)
+        const shop = await Shop.findById(req.params.shopId)
 
-        if(!hospital){
+        if(!shop){
             return res.status(400).json({
                 success: false,
-                message: `No hospital with the id of ${req.params.hospitalId}`
+                message: `No shop with the id of ${req.params.shopId}`
             });
         }
 
@@ -117,7 +126,7 @@ exports.updateReservation = async (req, res, next) => {
         if(!reservation){
             return res.status(400).json({
                 success: false,
-                message: `No reservation with the id of ${req.params.hospitalId}`
+                message: `No reservation with the id of ${req.params.shopId}`
             });
         }
 
@@ -154,7 +163,7 @@ exports.deleteReservation = async (req, res, next) => {
         if(!reservation){
             return res.status(400).json({
                 success: false,
-                message: `No reservation with the id of ${req.params.hospitalId}`
+                message: `No reservation with the id of ${req.params.shopId}`
             });
         }
 

@@ -19,8 +19,8 @@ const hpp = require('hpp');
 const cors = require('cors');
 
 //route file
-const shop = require('./routes/shop');
-// const appointment = require('./routes/appointments');
+const shop = require('./routes/shops');
+const reservation = require('./routes/reservations');
 const auth = require('./routes/auth');
 
 //load env
@@ -40,7 +40,7 @@ app.use(cors());
 
 // Sanitize data
 app.use(expressMongoSanitize());
-// app.use(xss());
+app.use(xss());
 
 // Set security helmet
 app.use(helmet());
@@ -58,9 +58,9 @@ app.use(hpp());
 
 
 //mount router
-app.use('/api/v1/shop', shop);
+app.use('/api/v1/shops', shop);
 app.use('/api/v1/auth', auth);
-// app.use('/api/v1/appointments', appointment);
+app.use('/api/v1/reservations', reservation);
 
 
 // set parser for pagination
