@@ -14,16 +14,25 @@ const ShopSchema = new mongoose.Schema({
     },
     tel: {
         type: String,
-        required: [true, 'Please add an telephone number']
+        required: [true, 'Please add an telephone number'],
+        match: [/^[0-9]{10}$/, 'Telephone number must be exactly 10 digits'],
     },
     openClose: {
         open: {
             type: String,
-            required: [true, 'Please add a Opening time']
+            required: [true, 'Please add a Opening time'],
+            match: [
+                /^([01]\d|2[0-3]):([0-5]\d)$/,
+                'Please use valid time format HH:mm from 00:00 - 23:59'
+            ]
         },
         close: {
             type: String,
-            required: [true, 'Please add a Closing time']
+            required: [true, 'Please add a Closing time'],
+            match: [
+                /^([01]\d|2[0-3]):([0-5]\d)$/,
+                'Please use valid time format HH:mm from 00:00 - 23:59'
+            ]
         }
     },
 },{
@@ -32,7 +41,7 @@ const ShopSchema = new mongoose.Schema({
 });
 
 // Reverse poppulation with virtuals
-ShopSchema.virtual('reservation', {
+ShopSchema.virtual('reservations', {
     ref: 'Reservation',
     localField: '_id',
     foreignField: 'Shop',

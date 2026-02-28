@@ -21,7 +21,7 @@ exports.getShops = async (req, res, next) => {
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
     // Find resource
-    query = Shop.find(JSON.parse(queryStr)).populate('reservation');
+    query = Shop.find(JSON.parse(queryStr)).populate('reservations');
 
     // Select fields
     if(req.query.select) {
@@ -77,7 +77,10 @@ exports.getShops = async (req, res, next) => {
             data: shops
         });
     }catch(err){
-        res.status(400).json({success: false});
+        res.status(400).json({
+            success: false,
+            error: err.message
+        });
     }
 };
 
@@ -86,15 +89,21 @@ exports.getShop = async (req, res, next) => {
         const shops = await Shop.findById(req.params.id);
 
         if(!shops){
-            res.status(400).json({success:false});
+            return res.status(404).json({
+                success:false,
+                error: 'This shop doesnt exist'
+            });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true, 
             data:shops
         });
     }catch(err){
-        res.status(400).json({success:false});
+        return res.status(400).json({
+            success: false,
+            error: err.message
+        });
     }
 };
 
@@ -118,7 +127,10 @@ exports.updateShop = async (req, res, next) => {
         );
 
         if(!shops){
-            res.status(400).json({success:false});
+            return res.status(404).json({
+                success:false,
+                error: 'This shop doesnt exist'
+            });
         }
 
         res.status(200).json({
