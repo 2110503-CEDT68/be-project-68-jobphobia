@@ -1,0 +1,30 @@
+@startuml
+top to bottom direction
+
+package "Massage Reservation Authentication" {
+
+    class "<<Application>>\nAuthService" as AuthService {}
+
+    class "<<Resource>>\nAuth" as ResourceAuth {
+        <<POST>> register():Users
+        <<POST>> login():Users
+        <<GET>> getMe():Users
+        <<GET>> getAll():Users
+        <<GET>> logout():Users
+    }
+
+
+    class "<<Representation>>\nUser" as RepresentationUser {
+        -name
+        -email
+        -role
+        -password
+        -createdAt
+    }
+}
+
+AuthService ..> ResourceAuth : "/api/auth\n<<Path>>"
+
+ControllerAuth ..> RepresentationUser : "<<use>>"
+
+@enduml
