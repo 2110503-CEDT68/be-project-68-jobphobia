@@ -1,7 +1,7 @@
-@startuml Massage Reservation Authentication
+@startuml Massage Reservation
 
 header CEDT Chulalongkorn University
-title "Massage Reservation Authentication"
+title "Massage Reservation"
 
 top to bottom direction
 
@@ -36,7 +36,7 @@ skinparam class {
 }
 
 
-package "Massage Reservation Authentication" {
+package "Massage Reservation" {
 
     class MassageReservationService <<Application>>
 
