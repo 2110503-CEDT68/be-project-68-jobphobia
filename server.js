@@ -35,8 +35,13 @@ app.use(express.json());
 //cookie parser
 app.use(cookieParser());
 
-// Enable cors
-app.use(cors());
+// Enable cors with credentials so frontend can send cookies
+app.use(
+    cors({
+        origin: 'http://localhost:3000',
+        credentials: true,
+    })
+);
 
 // Sanitize data
 app.use(expressMongoSanitize());
