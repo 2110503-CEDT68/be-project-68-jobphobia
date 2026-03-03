@@ -18,7 +18,7 @@ exports.register = async (req, res, next) => {
 
         // res.status(200).json({success: true, token});
         //use cookie
-        sendTokenResponse(user, 200, res);
+        sendTokenResponse(user, 201, res);
     }catch(err){
         res.status(400).json({success: false});
         console.log(err.stack);
